@@ -12,21 +12,22 @@
         <img src="QD2-R01.jpg" alt="">
     </div>
     <script>
-        const images = document.querySelectorAll('.image-container img');
+       const images = document.querySelectorAll('.image-container img');
 
 images.forEach((img) => {
-    let scale = 1;
-    let posX = 0, posY = 0;
-    let startX = 0, startY = 0;
+    let scale = 1; // Inicializa a escala
+    let posX = 0, posY = 0; // Inicializa a posição
+    let startX = 0, startY = 0; // Coordenadas iniciais para arraste
     let isDragging = false;
 
-    // Zoom com scroll do mouse
+    // Zoom com rolagem
     img.addEventListener('wheel', (event) => {
         event.preventDefault();
-
         const zoomFactor = 0.1;
-        scale += event.deltaY > 0 ? -zoomFactor : zoomFactor;
-        scale = Math.max(0.1, scale); // Apenas mantém o mínimo
+
+        // Ajuste de escala: Sem limite superior, mínimo de 0.1
+        const newScale = scale + (event.deltaY > 0 ? -zoomFactor : zoomFactor);
+        scale = Math.max(0.1, newScale);
 
         const rect = img.getBoundingClientRect();
         const originX = (event.clientX - rect.left) / rect.width;
@@ -36,19 +37,21 @@ images.forEach((img) => {
         img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
     });
 
-    // Arraste com mouse
+    // Mouse: Início do arraste
     img.addEventListener('mousedown', (event) => {
         isDragging = true;
         startX = event.clientX - posX;
         startY = event.clientY - posY;
-        img.style.cursor = "grabbing";
+        img.style.cursor = 'grabbing';
     });
 
+    // Mouse: Término do arraste
     document.addEventListener('mouseup', () => {
         isDragging = false;
-        img.style.cursor = "grab";
+        img.style.cursor = 'grab';
     });
 
+    // Mouse: Movimentação
     document.addEventListener('mousemove', (event) => {
         if (isDragging) {
             posX = event.clientX - startX;
@@ -58,7 +61,7 @@ images.forEach((img) => {
         }
     });
 
-    // Arraste no mobile
+    // Mobile: Início do toque
     img.addEventListener('touchstart', (event) => {
         if (event.touches.length === 1) {
             isDragging = true;
@@ -68,10 +71,12 @@ images.forEach((img) => {
         }
     });
 
+    // Mobile: Término do toque
     img.addEventListener('touchend', () => {
         isDragging = false;
     });
 
+    // Mobile: Movimentação
     img.addEventListener('touchmove', (event) => {
         if (isDragging && event.touches.length === 1) {
             const touch = event.touches[0];
@@ -82,6 +87,7 @@ images.forEach((img) => {
         }
     });
 });
+ 
 
     </script>
 </body>
