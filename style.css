@@ -1,0 +1,29 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Impede o overflow geral */
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: auto; /* Permite rolar e dar zoom */
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto; /* Faz a imagem se ajustar dinamicamente */
+  height: auto; /* Mantém proporções no início */
+  transition: transform 0.25s ease; /* Suaviza transições de zoom */
+  cursor: grab;
+  object-fit: contain; /* Garante que a imagem não estique fora do contêiner */
+}
+
+  
